@@ -109,11 +109,13 @@
       <div style="line-height: 1.6em">(१) &nbsp;&nbsp; कृषि चुन <b><?php echo $chun_value;?></b> कि ग्रा प्रति रोपनी<br>
         (२) &nbsp;&nbsp; रासायनिक मलको साथमा गुणस्तरीय प्राङ्गारिक मल तल दिइएको मात्रामा अनिबार्य प्रयोग गर्नुहोस
         <div class="ropani_table">
-          <table border="1" style="width:100%">
+          <table border="1" style="width:50%">
             <tr style="border:none">
-              <td><li> १५०० कि. ग्रा. वा ६० डोको प्रति रोपनी</li></td>
-              <td><li> १००० कि. ग्रा. वा ४० डोको प्रति रोपनी</li></td>
-              <td><li> ५०० कि. ग्रा. वा २० डोको प्रति रोपनी</li></td>
+              <?php
+                if($organic_value<=2.5) echo "<td><li> १५०० कि. ग्रा. वा ६० डोको प्रति रोपनी</li></td>";
+                if($organic_value>2.5 and $organic_value<=5) echo "<td><li> १००० कि. ग्रा. वा ४० डोको प्रति रोपनी</li></td>";
+                if($organic_value>5) echo "<td><li> ५०० कि. ग्रा. वा २० डोको प्रति रोपनी</li></td>";
+              ?>
             </tr>
           </table>
         </div>
@@ -128,17 +130,17 @@
               <th>पोटास कि. ग्रा. / रोपनी </th>
             </tr>
             <?php
-            if($nitrogen_value<=2) $nitrogen_range='nitrogen_min';
-            else if($nitrogen_value>2 and $nitrogen_value<4) $nitrogen_range='nitrogen_mid';
-            else if($nitrogen_value>=4) $nitrogen_range='nitrogen_max';
+            if($nitrogen_value<=0.1) $nitrogen_range='nitrogen_min';
+            else if($nitrogen_value>0.1 and $nitrogen_value<=0.2) $nitrogen_range='nitrogen_mid';
+            else if($nitrogen_value>0.2) $nitrogen_range='nitrogen_max';
+            
+            if($phosphorus_value<=31) $phosphorus_range='phosphorus_min';
+            else if($phosphorus_value>31 and $phosphorus_value<=55) $phosphorus_range='phosphorus_mid';
+            else if($phosphorus_value>55) $phosphorus_range='phosphorus_max';
 
-            if($phosphorus_value<=2) $phosphorus_range='phosphorus_min';
-            else if($phosphorus_value>2 and $phosphorus_value<4) $phosphorus_range='phosphorus_mid';
-            else if($phosphorus_value>=4) $phosphorus_range='phosphorus_max';
-
-            if($potas_value<=2) $potas_range='potas_min';
-            else if($potas_value>2 and $potas_value<4) $potas_range='potas_mid';
-            else if($potas_value>=4) $potas_range='potas_max';
+            if($potas_value<=110) $potas_range='potas_min';
+            else if($potas_value>110 and $potas_value<=280) $potas_range='potas_mid';
+            else if($potas_value>=280) $potas_range='potas_max';
 
             $recomm=$recommendation->getRecommByRange($nitrogen_range,$phosphorus_range,$potas_range);
             while($rem_row=$conn->fetchArray($recomm)){?>  
